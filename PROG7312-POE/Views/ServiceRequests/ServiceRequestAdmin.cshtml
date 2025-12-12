@@ -1,0 +1,358 @@
+﻿@model PROG7312_POE.Models.ServiceRequestNode<PROG7312_POE.Models.ServiceRequest>
+
+<style>
+    /* --- IMAGE BACKGROUND --- */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* --- CONTAINER --- */
+    .request-container {
+        background-color: #ffffff;
+        padding: 25px 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 40px auto;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    /* --- HEADER --- */
+    .header {
+        text-align: center;
+        background: linear-gradient(135deg, #063A89, #0d6efd);
+        color: white;
+        padding: 20px;
+        font-size: 26px;
+        font-weight: bold;
+        border-radius: 10px;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        margin-bottom: 25px;
+    }
+
+    /* --- SEARCH + ORGANIZE SECTION --- */
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-form input[type="text"],
+    select,
+    input[type="date"] {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        font-size: 14px;
+        transition: 0.3s ease;
+    }
+
+    .search-form input[type="text"]:focus,
+    select:focus,
+    input[type="date"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.4);
+    }
+
+    .btn-main {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-main:hover {
+        background-color: #0056d2;
+    }
+
+    /* --- REFRESH BUTTON --- */
+    .btn-refresh {
+        background-color: #063A89;
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    /* --- TABLE --- */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        overflow: hidden;
+    }
+
+    thead {
+        background-color: #063A89;
+        color: white;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 2px solid black
+    }
+
+    .status-node {
+        background-color: #eaf0f7;
+        font-weight: 600;
+        color: #063A89;
+    }
+
+    .report-node td {
+        font-size: 15px;
+        color: #333;
+    }
+
+    /* --- PROGRESS BAR --- */
+    .progress-container {
+        width: 100%;
+        background-color: #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 18px;
+        border: 1px solid black;
+    }
+
+    .progress-fill {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        transition: width 0.5s ease;
+        min-width: 18px;
+    }
+
+    .done {
+        background-color: #28a745;
+    }
+
+    .reviewed {
+        background-color: #007bff;
+    }
+
+    .inprogress {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .pending {
+        background-color: #6c757d;
+    }
+
+    .alert {
+        margin-top: 15px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    /* --- ROW STYLES --- */
+    .first-child-row {
+        background-color: #007bff !important;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .report-node {
+        background-color: #f9fafc;
+        font-size: 10px;
+    }
+</style>
+
+<div class="request-container">
+    <!-- HEADER -->
+    <div class="header">
+        <i class="fa fa-clipboard-list" style="margin-right:10px;"></i>
+        @Model.Data.RequestTitle
+    </div>
+
+    <!-- SEARCH + ORGANIZE SECTION -->
+    <div class="form-row">
+        <!-- SEARCH -->
+        <form method="get" asp-action="ServiceRequestAdminSearch" class="search-form">
+            <input style="width:350px" type="text" name="query" placeholder="Search by report ID, category, or location" />
+            <input type="hidden" name="organizeBy" value="@ViewBag.OrganizeBy" />
+            <button type="submit" class="btn-main">Search</button>
+        </form>
+
+        <!-- ORGANIZE -->
+        <form method="get" asp-action="ServiceRequestAdminOrganize" id="organizeForm" class="organize-form">
+            <select name="organizeBy" onchange="document.getElementById('organizeForm').submit();">
+                <option value="">-- Organize Requests --</option>
+                <option value="Status">Status</option>
+                <option value="Location">Location</option>
+                <option value="Date">Date</option>
+            </select>
+            <a asp-action="ServiceRequestAdmin" class="btn-refresh"><i class="fa fa-refresh"></i></a>
+        </form>
+    </div>
+
+    <!-- FILTER SECTION -->
+    <form method="get" asp-action="ServiceRequestAdminFilter" class="form-filters">
+        <input type="hidden" name="organizeBy" value="@ViewBag.OrganizeBy" />
+
+        <label>Status:</label>
+        <select name="status">
+            <option value="">All</option>
+            @foreach (var stat in ViewBag.Statuses ?? new List<string>())
+            {
+                <option value="@stat">@stat</option>
+            }
+        </select>
+
+        <label>Location:</label>
+        <select name="location">
+            <option value="">All</option>
+            @foreach (var loc in ViewBag.Locations ?? new List<string>())
+            {
+                <option value="@loc">@loc</option>
+            }
+        </select>
+
+        <label>Date:</label>
+        <input type="date" name="date" value="@(ViewBag.SelectedDate != null ? ((DateTime)ViewBag.SelectedDate).ToString("yyyy-MM-dd") : "")" />
+
+        <button type="submit" class="btn-main">Apply Filters</button>
+    </form>
+
+    <!-- ERROR MESSAGE -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-primary">@TempData["Error"]</div>
+    }
+
+    <br />
+
+    <!-- TABLE -->
+    <table>
+        <thead style="border: 2px solid black">
+            <tr>
+                <th style="width:50%; text-align: center">Title</th>
+                <th style="width:13.5%;">Date</th>
+                <th style="width:12.5%;">Status</th>
+                <th style="width:25%; text-align: center">Progress</th>
+                <th style="width:20%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black">
+            @for (int i = 0; i < Model.Children.Count; i++)
+            {
+                RenderTree(Model.Children[i], (i + 1).ToString(), 1);
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- FUNCTION TO RENDER TREE -->
+@functions {
+    public void RenderTree(PROG7312_POE.Models.ServiceRequestNode<PROG7312_POE.Models.ServiceRequest> node, string number, int level)
+    {
+        string title;
+        string statusText = node.Data.Status ?? "";
+
+        if (level == 1)
+        {
+            // First-level child (title only)
+            title = $"{number}. {node.Data.RequestTitle}";
+
+            // Show number of reports under the status column
+            int reportCount = node.Children.Count;
+            if (reportCount > 0) statusText += $" {reportCount} items";
+        }
+        else
+        {
+            // Second-level child: ReportID: Location - Description
+            title = $"{node.Data.ReportID}: {(node.Data.Location ?? "No Location")} - {node.Data.Description}";
+        }
+
+        string cssClass = level == 1 ? "first-child-row" : "report-node";
+
+        int progressPercent = 0;
+        string progressClass = "pending";
+        bool fullBarTextOnly = false;
+
+        switch ((node.Data.Status ?? "").ToLower())
+        {
+            case "done": progressPercent = 100; progressClass = "done"; break;
+            case "reviewed": progressPercent = 75; progressClass = "reviewed"; break;
+            case "in progress": progressPercent = 50; progressClass = "inprogress"; break;
+            case "pending": progressPercent = 0; progressClass = "pending"; fullBarTextOnly = true; break;
+        }
+
+        string progressText = $"{progressPercent}%";
+
+        <text>
+            <tr class="@cssClass">
+                <td>@title</td>
+                <td style="text-align:center">
+                    @(node.Data.Date.HasValue? node.Data.Date.Value.ToString("d MMM yyyy") : "")
+                </td>
+                <td style="text-align:center;">@statusText</td>
+                <td>
+                    @if (level != 1)
+                    {
+                        <div class="progress-container">
+                            @if (fullBarTextOnly)
+                            {
+                                <div class="progress-fill" style="width:100%; background-color:white; color:black;">
+                                    @progressText
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="progress-fill @progressClass" style="width:@progressPercent%">
+                                    @progressText
+                                </div>
+                            }
+                        </div>
+                    }
+                </td>
+                <td style="text-align:center">
+                    @if (level != 1)
+                    {
+                        <a class="btn btn-sm btn-primary"
+                           style="border-radius:50%;"
+                           title="Update Status"
+                           href="@Url.Action("UpdateServiceRequest", "ServiceRequests", new { requestId = node.Data.ReportID })">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        </text>
+
+        for (int i = 0; i < node.Children.Count; i++)
+        {
+            string childNumber = number + "." + (i + 1);
+            RenderTree(node.Children[i], childNumber, level + 1);
+        }
+    }
+}

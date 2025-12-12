@@ -1,0 +1,139 @@
+﻿@model PROG7312_POE.Models.Event
+@{
+    ViewData["Title"] = "Event Overview";
+}
+
+<style>
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .event-card {
+        border-radius: 15px;
+        overflow: hidden;
+        margin-top: 3rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .card-header {
+        background: #0d6efd;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .btn-back {
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background-color: rgba(0,0,0,0.3);
+        border: none;
+        padding: 0.3rem 0.7rem;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .btn-back:hover {
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+        }
+
+    .card-body {
+        background-color: rgba(255,255,255,0.95);
+        padding: 2rem;
+    }
+
+    .left-details h3 {
+        margin-top: 0;
+        color: #0d6efd;
+    }
+
+    .left-details p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .event-image {
+        width: 100%;
+        border-radius: 10px;
+        max-height: 300px;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .right-info {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between; /* Location and Views side by side */
+        font-size: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .date-row {
+        display: flex;
+        align-items: center; /* vertically center label and value */
+        gap: 0.5rem; /* spacing between label and value */
+        font-size: 1.2rem; /* adjust as needed */
+    }
+
+    .date-value {
+        font-weight: normal;
+    }
+
+    
+</style>
+
+<div class="container">
+    <div class="card event-card">
+        <!-- Header with back button and title -->
+        <div class="card-header">
+            <a href="@Url.Action("EventIndex", "Events")" class="btn-back">&#10094; Back</a>
+            <span>@Model.EventTitle</span>
+            <span></span>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body">
+            <div class="row row-flex d-flex">
+                <!-- Left column: Description + Category -->
+                <div class="col-md-7 left-details d-flex flex-column">
+                    <div class="d-flex align-items-center gap-4">
+                        <h2 class="mb-0">Description</h2>
+                        <span class="badge bg-primary" style="font-size:1rem;margin-left:380px">@Model.Category</span>
+                    </div>
+                    <p style="font-size:20px">@Model.EventDescription</p>
+
+                    <h2 style="margin-bottom:0">Location:</h2>
+                    <p style="font-size:20px;">@Model.Location</p>
+                    <div class="date-row">
+                        <h2>Date:</h2>
+                        <span class="date-value">@Model.EventStartDate.ToString("dd MMM yyyy") - @Model.EventEndDate.ToString("dd MMM yyyy")</span>
+                    </div>
+                    <br />
+                        <p><strong>Views:</strong> <i class="fa fa-eye"></i> @Model.Priority</p>
+                    
+                    
+                </div>
+
+                <!-- Right column: Image + Location + Views -->
+                <div class="col-md-5">
+                    @if (!string.IsNullOrEmpty(Model.Media))
+                    {
+                        <img src="@Model.Media" alt="Event Media" class="event-image" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />

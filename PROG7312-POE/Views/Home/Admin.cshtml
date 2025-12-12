@@ -1,0 +1,105 @@
+﻿@model PROG7312_POE.Models.ReportIssue
+
+@{
+    ViewData["Title"] = "ReportIssues";
+}
+
+<style>
+    /* Background image */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form */
+    .form {
+        max-width: 100vw;
+        width: 100%;
+        background-color: white;
+        box-shadow: 1px 1px 10px 1px black;
+        padding-left: 3%;
+        padding-right: 3%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .form-title {
+        position: relative;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-title h2 {
+        margin: 0;
+        font-size: 40px;
+    }
+
+    .form-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 85px;
+        height: 70px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+    /* Button */
+    .buttons {
+        background-color: #063A89; /*#D0F4B9*/
+        border: 2px solid black;
+        padding-top:6%;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 1px 2px 5px 2px black;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        width: 300px;
+        height: 100px;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .buttons:hover {
+        color: white;
+        filter: brightness(1.2);
+        transform: scale(1.1);
+    }
+</style>
+
+<!-- Admin Features -->
+<div class="row" style="justify-content:center; margin-top:0;">
+    <div class="col-md-10" style="height:75vh;width:40vw; border: 5px solid black;background-color:white">
+        <h1 style="text-align:center;margin-top:10px;">Admin Features:</h1>
+        <hr style="width:30vw;margin: 10px auto; margin-bottom:20px;" />
+        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+            <!-- List of Report Issues -->
+            <a class="buttons" asp-controller="Reports" asp-action="ReportIssuesList">
+                Report Issues
+            </a>
+
+            <!-- List of Feedback Surveys-->
+            <a class="buttons" asp-controller="Feedback" asp-action="FeedbackList">
+                Feedback Surveys
+            </a>
+
+            <!-- List of Request Services -->
+            <a class="buttons" asp-controller="ServiceRequests" asp-action="ServiceRequestAdmin">
+                Service Requests
+            </a>
+        </div>
+    </div>
+</div>
+<br />

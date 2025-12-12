@@ -1,0 +1,226 @@
+﻿@model PROG7312_POE.Models.Feedback
+
+@{
+    ViewData["Title"] = "ReportIssues";
+}
+
+<style>
+    /* Background image */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form */
+    .form {
+        max-width: 50vw;
+        width: 100%;
+        background-color: white;
+        box-shadow: 1px 1px 10px 1px black;
+        padding-left: 3%;
+        padding-right: 3%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .form-title {
+        position: relative;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-title h2 {
+        margin: 0;
+        font-size: 40px;
+    }
+
+    .form-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 85px;
+        height: 70px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+    /* Star rating */
+    .star-rating {
+        font-size: 50px;
+        cursor: pointer;
+        color: #ccc; 
+    }
+
+    .star-rating .star.selected {
+        color: rgba(69, 165, 217, 0.95); 
+    }
+
+    .star-rating .star.hover {
+        color: rgba(69, 165, 217, 0.6);
+    }
+
+    /* Button */
+    .submit {
+        font-weight: bold;
+        box-shadow: 2px 2px 4px 2px black;
+        width: 80%;
+    }
+
+    .submit:hover {
+        transform: scale(1.1);
+    }
+
+    /* Back Button */
+    .back-button {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 25px;
+        text-decoration: none;
+        box-shadow: 1px 1px 2px 1px black;
+        border-radius: 100px;
+        padding: 2px 10px;
+        background-color: rgba(69, 165, 217, 0.8);
+        color: white;
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+
+    .back-button:hover {
+        color: white;
+        background-color: rgba(69, 165, 217, 1.0);
+        transform: translateY(-50%) scale(1.1);
+    }
+</style>
+
+<div class="row" style="justify-content:center; margin-top:0;">
+    <div style="display:flex; justify-content:center; align-items:center; min-height:100vh;">
+        <!-- Report Issue Form -->
+        <form asp-action="FeedbackSurvey" method="post" class="form" style="background-image:url('');background-repeat:no-repeat; background-size: contain;background-position:center">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Back Button + Title -->
+            <div class="form-title">
+                <a class="back-button" asp-controller="Home" asp-action="Index">&#10094;-</a>
+                <h2>Feedback Survey:</h2>
+                <img src="~/img/logo.png" alt="logo" class="form-logo" />
+            </div>
+            <br />
+            <hr />
+            <!-- Form Inputs -->
+            <div class="form-group">
+                <!-- Rating -->
+                <label asp-for="Rating">1. What would you rate our website out of 10:</label>
+                <input type="hidden" asp-for="Rating" id="Rating" style="color:black;font-weight:bold;" />
+
+                <!-- Star Rating -->
+                <div class="star-rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                    <span class="star" data-value="6">&#9733;</span>
+                    <span class="star" data-value="7">&#9733;</span>
+                    <span class="star" data-value="8">&#9733;</span>
+                    <span class="star" data-value="9">&#9733;</span>
+                    <span class="star" data-value="10">&#9733;</span>
+                </div>
+
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <!-- Satisfaction -->
+            <div class="form-group">
+                <label asp-for="Satisfaction">2. How satisfied were you with your website experience:</label>
+                <select asp-for="Satisfaction" id="Satisfaction" class="form-control" style="background-color: rgba(69, 165, 217, 0.8);color:black;font-weight:bold; margin-bottom: 15px;">
+                    <option value="">--Select Satisfaction--</option>
+                    <option value="Not Satisfied">Not Satisfied</option>
+                    <option value="Satisfied">Satisfied</option>
+                    <option value="Very Satisfied">Very Satisfied</option>
+                </select>
+                <span asp-validation-for="Satisfaction" class="text-danger"></span>
+            </div>
+               
+            <!-- Improvements -->
+            <div class="form-group">
+                <label asp-for="Improvements">3. What would you improve to better your website experience:</label>
+                <textarea asp-for="Improvements" id="Improvements" class="form-control" rows="4" style="background-color: rgba(69, 165, 217, 0.8);color:black;font-weight:bold;"></textarea>
+                <span asp-validation-for="Improvements" class="text-danger"></span>
+            </div>
+            
+            <!-- Optional Comments -->
+            <div class="form-group">
+                <label asp-for="Comments">4. Is there any other comment(s) you would like to inform us about?:(Optional)</label>
+                <textarea asp-for="Comments" id="Comments" class="form-control" rows="4" style="background-color: rgba(69, 165, 217, 0.8);color:black;font-weight:bold;"></textarea>
+                <span asp-validation-for="Comments" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Submit Feedback" class="submit btn btn-primary px-4 py-2" style="box-shadow:1px 1px 2px 1px black;" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star-rating .star");
+        const ratingInput = document.getElementById("Rating");
+
+        stars.forEach(star => {
+            // Hover effect
+            star.addEventListener("mouseover", function () {
+                resetStars();
+                highlightStars(this.dataset.value, "hover");
+            });
+
+            star.addEventListener("mouseout", function () {
+                resetStars();
+                if (ratingInput.value) {
+                    highlightStars(ratingInput.value, "selected");
+                }
+            });
+
+            // Click to select
+            star.addEventListener("click", function () {
+                ratingInput.value = this.dataset.value;
+                resetStars();
+                highlightStars(ratingInput.value, "selected");
+            });
+        });
+
+        function highlightStars(rating, className) {
+            stars.forEach(s => {
+                if (parseInt(s.dataset.value) <= parseInt(rating)) {
+                    s.classList.add(className);
+                }
+            });
+        }
+
+        function resetStars() {
+            stars.forEach(s => {
+                s.classList.remove("selected");
+                s.classList.remove("hover");
+            });
+        }
+    });
+</script>
+
+<!-- References
+    CodingLab (2022). How to Create Star Rating in HTML CSS & JavaScript. [online] YouTube. Available at: https://www.youtube.com/watch?v=q1xhbc-oKnc.
+    Tech With Abhi (2024). The Easiest way to make star rating system in html css Javascript. [online] YouTube. Available at: https://www.youtube.com/watch?v=ErtiCYfoVhA.
+-->

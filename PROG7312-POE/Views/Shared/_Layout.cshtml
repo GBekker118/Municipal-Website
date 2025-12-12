@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<style>
+    body {
+        margin:0;
+        padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: #063A89;
+        font-weight:bold;
+    }
+
+    .navbar-nav {
+        flex-wrap: wrap;
+    }
+
+    .navbar-brand {
+        margin-right: 100px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 0; 
+    }
+
+    .navbar-nav .nav-link {
+        padding: 8px 15px; 
+    }
+
+    /* SignIn Button */
+    .button {
+        background-color: #049854;
+        box-shadow: 1px 1px 5px 1px black;
+        border-radius:5px;
+        padding:5px;
+        text-align:center;
+        width:100px;
+        font-weight:bold;
+        font-size:18px;
+    }
+
+    .button:hover {
+        transform: scale(1.1);
+        filter: brightness(0.8);
+    }
+
+    /* Footer */
+    .footer-container {
+        display: flex;
+        justify-content: space-between; 
+        align-items: flex-start;
+        color: white;
+        flex-wrap: wrap; 
+        gap: 40px; 
+    }
+
+    .footer-center-group {
+        display: flex;
+        flex-direction: row;
+        gap: 60px;
+        flex-wrap: wrap; 
+    }
+
+    .footer-left {
+        flex: 0 0 auto; 
+    }
+
+    .footer h2 {
+        margin-bottom: 15px;
+    }
+
+    .footer-right p a img {
+        margin-right: 10px; 
+    }
+
+    .footer-center, .footer-right {
+        text-align: left;
+    }
+
+    footer p, footer h1, footer div {
+        margin: 0;
+    }
+
+    
+</style>
+<html lang="en">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PROG7312_POE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PROG7312_POE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="height:10vh;">
+            <!-- Logo -->
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><img src="~/img/logo.png" alt="logo" style="width:65px;height:55px;border-radius:5px;margin-left:20px" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item me-3">
+                            <a class="nav-link" style="color: white; font-size:20px" asp-controller="Reports" asp-action="ReportIssues">Report Issues</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" style="color: white; font-size:20px" asp-controller="Events" asp-action="EventIndex">Local Events</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" style="color: white; font-size:20px" asp-controller="ServiceRequests" asp-action="ServiceRequestIndex">Service Request Status</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" style="color: white; font-size:20px" asp-controller="Feedback" asp-action="FeedbackSurvey">Feedback Survey</a>
+                        </li>
+                    </ul>
+                    <!-- Sign In Button -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="button nav-link" style="color: white; margin-right:10px" asp-controller="Home" asp-action="Admin">Sign In</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-muted" style="background-color:#0F1A20; padding:20px 2%; width:100%; margin:0; position:relative; bottom:0vh;">
+        <div class="footer-container" style="display:flex; flex-wrap:wrap; gap:50px; align-items:flex-start; justify-content:flex-start;">
+
+            <!-- Logo -->
+            <div class="footer-left text-white" style="display:flex; flex-direction:column; align-items:flex-start; gap:2px;">
+                <p style="font-size:25px; margin:0;">&copy; Evergreen Municipality</p>
+                <img src="~/img/logo.png" alt="logo" style="width:85px;height:80px;border-radius:5px; margin-left:100px" />
+            </div>
+
+            <!-- Policy Info -->
+            <div class="footer-center text-white" style="display:flex; flex-direction:column; gap:2px; margin-left:20px;">
+                <h2 style="margin:0;">Policy Info</h2>
+                <p style="font-size:20px; margin:0;">PAIA</p>
+                <p style="font-size:20px; margin:0;">About Us</p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-right text-white" style="display:flex; flex-direction:column; gap:2px; margin-left:20px;">
+                <h2 style="margin:0;">Contact Info</h2>
+                <p style="font-size:20px; margin:0;">Tel: (+27) 5629384756</p>
+                <p style="font-size:20px; margin:0;">Office: (+27) 4829475846</p>
+            </div>
+
+            <!-- Connect With Us -->
+            <div class="footer-right text-white" style="display:flex; flex-direction:column; gap:2px; margin-left:20px;">
+                <h2 style="margin:0;">Connect With Us:</h2>
+                <p style="font-size:20px; display:flex; gap:5px; margin:0;">
+                    <a style="text-decoration:none;" href="https://www.facebook.com" target="_blank">
+                        <img src="~/img/facebook.png" alt="Facebook" />
+                    </a>
+                    <a style="text-decoration:none;" href="https://www.linkedin.com" target="_blank">
+                        <img src="~/img/linkedin.png" alt="LinkedIn" />
+                    </a>
+                    <a style="text-decoration:none;" href="https://www.twitter.com" target="_blank">
+                        <img src="~/img/twitter.png" style="background-color:white;border-radius:20px;height:40px" alt="Twitter" />
+                    </a>
+                    <a style="text-decoration:none;" href="https://www.gmail.com">
+                        <img src="~/img/email.png" alt="Email" />
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7312-POE", "PROG7312-POE\PROG7312-POE.csproj", "{ACDCCCE9-D287-484E-8044-71E919BE0131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROG7312-POE-API", "PROG7312-POE-API\PROG7312-POE-API.csproj", "{D6F2C86F-74AD-4A21-9E46-96676BC1C497}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACDCCCE9-D287-484E-8044-71E919BE0131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACDCCCE9-D287-484E-8044-71E919BE0131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACDCCCE9-D287-484E-8044-71E919BE0131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACDCCCE9-D287-484E-8044-71E919BE0131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F2C86F-74AD-4A21-9E46-96676BC1C497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F2C86F-74AD-4A21-9E46-96676BC1C497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F2C86F-74AD-4A21-9E46-96676BC1C497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F2C86F-74AD-4A21-9E46-96676BC1C497}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CA76666-D61E-4AA4-931D-101C25A394FE}
+	EndGlobalSection
+EndGlobal

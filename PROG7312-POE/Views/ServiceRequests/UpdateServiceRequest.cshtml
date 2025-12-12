@@ -1,0 +1,209 @@
+﻿@model PROG7312_POE.Models.ReportIssue
+
+@{
+    ViewData["Title"] = "UpdateServiceRequest";
+    var allStatuses = new List<string> { "Pending", "In Progress", "Reviewed", "Done" };
+    var dropdownStatuses = allStatuses.Where(s => s != Model.Status).ToList();
+    dropdownStatuses.Insert(0, Model.Status);
+}
+
+<style>
+    /* --- BACKGROUND --- */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    /* --- CARD --- */
+    .card {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        text-align: center;
+        position: relative;
+    }
+
+    .card h1 {
+        font-size: 26px;
+        font-weight: bold;
+        color: #063A89;
+        margin-bottom: 20px;
+    }
+
+    .card h4 {
+        font-size: 18px;
+        color: #0d6efd;
+    }
+
+    /* --- IMAGE --- */
+    .image {
+        display: block;
+        margin: 0 auto 20px; 
+        width: 250px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    /* --- REPORT ID --- */
+    .id-section {
+        background-color: #e7f1ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #063A89;
+    }
+
+    /* --- CATEGORY --- */
+    .category-title {
+        background-color: #d0ebff;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    /* --- LOCATION + DATE --- */
+    .location-date {
+        margin-bottom: 15px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    /* --- DESCRIPTION --- */
+    .description {
+        background-color: #f1f5f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+        font-size: 20px;
+    }
+
+    .form-group {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 20px;
+        font-weight: bold;
+        color: #063A89;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    select.form-control {
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    select.form-control:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.4);
+    }
+
+    /* --- UPDATE STATUS BUTTON --- */
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .btn-primary:hover {
+        background-color: #063A89;
+    }
+
+    .btn-primary i {
+        margin-right: 8px;
+    }
+
+    /* --- BACK BUTTON --- */
+    .btn-back {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        color: #063A89;
+        padding: 6px 12px;
+        text-decoration: none;
+        font-size: 30px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+</style>
+
+<div class="card">
+    <!-- BACK BUTTON -->
+    <a href="javascript:history.back()" class="btn-back"><i class="fas fa-arrow-left"></i></a>
+    <!-- HEADER -->
+    <h1>Service Request Report</h1>
+    <h4>Request Details</h4>
+    <hr />
+
+    <!-- IMAGE -->
+    <img class="image" src="@Model.Media" alt="Report Media" />
+
+    <!-- ID + CATEGORY SECTION -->
+    <div class="id-category-section" style="margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <h2 style="margin:0; font-size: 30px;font-weight:bold; color:#063A89;">@Model.Id</h2>
+        <span style="background-color:#0d6efd; color:white; padding:5px 15px; border-radius:10px; font-weight:bold; font-size:15px;">@Model.Category</span>
+    </div>
+
+    <!-- LOCATION + DATE -->
+    <div class="location-date">
+        <div style="font-size: 20px;">Location: @Model.Location</div>
+        <div style="font-size: 20px;">Date: @Model.Date.ToString("dd MMM yyyy") at @Model.Date.ToString("HH:mm")</div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="description">
+        @Model.Description
+    </div>
+
+    <!-- UPDATE STATUS SECTION -->
+    <form asp-action="UpdateStatusUsingTree" asp-controller="ServiceRequests" method="post">
+        <input type="hidden" name="reportId" value="@Model.Id" />
+        <div class="form-group">
+            <label>Status:</label>
+            <select name="newStatus" class="form-control" style="background-color: #0d6efd; color: white">
+                @foreach (var status in dropdownStatuses)
+                {
+                    <option value="@status">@status</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn-primary">
+            Update Status  <i style="margin-left: 8px;" class="fa fa-pencil-alt"></i>
+        </button>
+    </form>
+</div>

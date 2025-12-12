@@ -1,0 +1,155 @@
+﻿@model PROG7312_POE.Models.Announcement
+
+@{
+    ViewData["Title"] = "CreateAnnouncement";
+}
+
+<style>
+    /* Background image */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form */
+    .form {
+        max-width: 100vw;
+        width: 100%;
+        background-color: white;
+        box-shadow: 1px 1px 10px 1px black;
+        padding-left: 3%;
+        padding-right: 3%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .form-title {
+        position: relative;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-title h2 {
+        margin: 0;
+        font-size: 40px;
+    }
+
+    .form-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 85px;
+        height: 70px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+    /* Button */
+    .submit {
+        font-weight: bold;
+        box-shadow: 2px 2px 4px 2px black;
+        width: 80%;
+    }
+
+    .submit:hover {
+        transform: scale(1.1);
+    }
+
+    /* Back Button */
+    .back-button {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 25px;
+        text-decoration: none;
+        box-shadow: 1px 1px 2px 1px black;
+        border-radius: 100px;
+        padding: 2px 10px;
+        background-color: rgba(69, 165, 217, 0.8);
+        color: white;
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+
+    .back-button:hover {
+        color: white;
+        background-color: rgba(69, 165, 217, 1.0);
+        transform: translateY(-50%) scale(1.1);
+    }
+</style>
+
+<div class="row" style="justify-content:center; margin-top:0;">
+    <div class="col-md-10">
+        <!-- Create Announcement Form -->
+        <form asp-action="CreateAnnouncement" method="post" class="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AnnouncementId" value="@Guid.NewGuid().ToString()" />
+            <!-- Back Button + Title -->
+            <div class="form-title">
+                <a class="back-button" asp-controller="Events" asp-action="EventIndex" asp-route-activeTab="announcements">&#10094;-</a>
+                <h2>Create an Announcement:</h2>
+                <img src="~/img/logo.png" alt="logo" class="form-logo" />
+            </div>
+
+            <!-- Form Inputs -->
+            <div class="row mt-3">
+
+                <!-- LEFT: Title, Category -->
+                <div class="col-md-6 order-md-1">
+                    <div class="form-group">
+                        <label asp-for="AnnouncementTitle">Announcement Title:</label>
+                        <input asp-for="AnnouncementTitle" id="AnnouncementTitle" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                        <span asp-validation-for="AnnouncementTitle" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="AnnouncementLocation">Location:</label>
+                        <input asp-for="AnnouncementLocation" id="AnnouncementLocation" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                        <span asp-validation-for="AnnouncementLocation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="AnnouncementCategory">Category:</label>
+                        <select asp-for="AnnouncementCategory" id="AnnouncementCategory" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required>
+                            <option value="">--Select Category--</option>
+                            <option>Community</option>
+                            <option>Health</option>
+                            <option>Education</option>
+                            <option>Safety</option>
+                            <option>Events</option>
+                            <option>Environment</option>
+                            <option>Alerts</option>
+                            <option>Water</option>
+                            <option>Traffic</option>
+                        </select>
+                        <span asp-validation-for="AnnouncementCategory" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: Description -->
+                <div class="col-md-6 order-md-2" >
+                    <div class="form-group">
+                        <label asp-for="AnnouncementMessage">Message:</label>
+                        <textarea asp-for="AnnouncementMessage" id="Description" class="form-control" rows="8" style="background-color: rgba(69, 165, 217, 0.8); color:black;font-weight:bold; height:28vh" required></textarea>
+                        <span asp-validation-for="AnnouncementMessage" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Post Announcement" class="submit btn btn-primary px-4 py-2" style="box-shadow:1px 1px 2px 1px black; width:40vw" required />
+            </div>
+        </form>
+    </div>
+</div>
+<br />

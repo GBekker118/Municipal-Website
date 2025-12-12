@@ -1,0 +1,255 @@
+﻿@model PROG7312_POE.Models.Event
+
+@{
+    ViewData["Title"] = "CreateEvent";
+}
+
+<style>
+    /* Background image */
+    body {
+        background-image: url('/img/slide2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form */
+    .form {
+        max-width: 100vw;
+        width: 100%;
+        background-color: white;
+        box-shadow: 1px 1px 10px 1px black;
+        padding-left: 3%;
+        padding-right: 3%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .form-title {
+        position: relative;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-title h2 {
+        margin: 0;
+        font-size: 40px;
+    }
+
+    .form-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 85px;
+        height: 70px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+    /* Button */
+    .submit {
+        font-weight: bold;
+        box-shadow: 2px 2px 4px 2px black;
+        width: 80%;
+    }
+
+    .submit:hover {
+        transform: scale(1.1);
+    }
+
+    /* Back Button */
+    .back-button {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 25px;
+        text-decoration: none;
+        box-shadow: 1px 1px 2px 1px black;
+        border-radius: 100px;
+        padding: 2px 10px;
+        background-color: rgba(69, 165, 217, 0.8);
+        color: white;
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+
+    .back-button:hover {
+        color: white;
+        background-color: rgba(69, 165, 217, 1.0);
+        transform: translateY(-50%) scale(1.1);
+    }
+</style>
+
+<div class="row" style="justify-content:center; margin-top:0;">
+    <div class="col-md-10">
+        <!-- Create Event Form -->
+        <form asp-action="CreateEvent" method="post" enctype="multipart/form-data" class="form" ; background-position:center">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EventId" value="Event-001" />
+            <!-- Back Button + Title -->
+            <div class="form-title">
+                <a class="back-button" asp-controller="Events" asp-action="EventIndex">&#10094;-</a>
+                <h2>Create an Event:</h2>
+                <img src="~/img/logo.png" alt="logo" class="form-logo" />
+            </div>
+
+            <!-- Form Inputs -->
+            <div class="row mt-3">
+                <!-- UNDER TITLE: Location, Event Date-->
+
+                <!-- LEFT: Title, Category, Media -->
+                <div class="col-md-6 order-md-1">
+                    <div class="form-group">
+                        <label asp-for="EventTitle">Event Name:</label>
+                        <input asp-for="EventTitle" id="EventTitle" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                        <span asp-validation-for="EventTitle" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Location">Location:</label>
+                        <input asp-for="Location" id="Location" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-flex gap-3">
+                        <!-- Event Start Date -->
+                        <div class="flex-grow-1">
+                            <label asp-for="EventStartDate">Event Starting Date:</label>
+                            <input asp-for="EventStartDate" type="datetime-local" id="EventStartDate"
+                                   class="form-control"
+                                   style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                            <span asp-validation-for="EventStartDate" class="text-danger"></span>
+                        </div>
+
+                        <!-- Event End Date -->
+                        <div class="flex-grow-1">
+                            <label asp-for="EventEndDate">Event End Date:</label>
+                            <input asp-for="EventEndDate" type="datetime-local" id="EventEndDate" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold;" required />
+                            <span asp-validation-for="EventEndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="EventDescription">Description:</label>
+                        <textarea asp-for="EventDescription" id="Description" class="form-control" rows="8" style="background-color: rgba(69, 165, 217, 0.8); color:black;font-weight:bold; height: 25vh" required></textarea>
+                        <span asp-validation-for="EventDescription" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Description -->
+                <div class="col-md-6 order-md-2">
+                    
+                    <div class="form-group">
+                        <label asp-for="Category">Category:</label>
+                        <select asp-for="Category" id="Category" class="form-control" style="background-color: rgba(69, 165, 217, 0.8); color:black; margin-bottom: 15px;font-weight:bold; text-align:center" required>
+                            <option value="">--Select Category--</option>
+                            <option>Community</option>
+                            <option>Health</option>
+                            <option>Education</option>
+                            <option>Sports</option>
+                            <option>Environment</option>
+                            <option>Safety</option>
+                            <option>Cultural</option>
+                            <option>Traffic</option>
+                            <option>Utilities</option>
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <!-- Media Upload and Preview -->
+                    <div class="form-group position-relative" style="height: 50vh; border: 5px dashed rgba(69,165,217,0.8); border-radius: 10px; overflow: hidden;">
+
+                        <!-- File Input -->
+                        <input asp-for="Media" type="file" id="Media" name="mediaFile" accept="image/*" class="form-control position-absolute top-0 start-0 w-100 h-100" style="opacity: 0; cursor: pointer; z-index: 2;" required />
+
+                        <!-- Preview Image -->
+                        <img id="previewImage" src="#" alt="Preview" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; display: none; z-index: 1; border-radius: 10px;" />
+
+                        <!-- Overlay text -->
+                        <div id="uploadText"
+                             class="position-absolute top-50 start-50 translate-middle text-center text-dark fw-bold"
+                             style="font-size: 20px; pointer-events: none;">
+                            Click or Drag an Image Here
+                        </div>
+
+                        <span asp-validation-for="Media" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Post Event" class="submit btn btn-primary px-4 py-2" style="box-shadow:1px 1px 2px 1px black; width:40vw" required />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<!-- JavaScript to show image previews when a user uploads a file -->
+<script>
+    const mediaInput = document.getElementById('Media');
+    const previewImage = document.getElementById('previewImage');
+    const uploadText = document.getElementById('uploadText');
+
+    mediaInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                uploadText.style.display = 'none'; 
+            }
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.src = '#';
+            previewImage.style.display = 'none';
+            uploadText.style.display = 'block'; 
+        }
+    });
+</script>
+
+<!-- JavaScript to check if event start and end dates are not before today's date -->
+<script>
+    // Validate event dates before form is submitted
+    document.querySelector("form").addEventListener("submit", function (event) {
+        const startDate = new Date(document.getElementById("EventStartDate").value);
+        const endDate = new Date(document.getElementById("EventEndDate").value);
+        const today = new Date();
+
+        // Remove time from DateTime
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        // Check if start date is before today's date
+        if (startDate < today) {
+            alert("Error: The event start date cannot be earlier than today's date.");
+            event.preventDefault();
+            return false;
+        }
+
+        // Check if end date is before start date
+        if (endDate < startDate) {
+            alert("Error: The event end date cannot be earlier than the event start date.");
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+<!-- References:
+    
+    Simbian (2010). Preview an image before it is uploaded. [online] Stack Overflow. Available at: https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded.
+    moleculezz (2010). Comparing date part only without comparing time in JavaScript. [online] Stack Overflow. Available at: https://stackoverflow.com/questions/2698725/comparing-date-part-only-without-comparing-time-in-javascript.
+
+-->
+‌
+
